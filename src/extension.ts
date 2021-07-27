@@ -19,7 +19,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 }
 
 async function initializeExtension(_opId: string, context: vscode.ExtensionContext): Promise<void> {
-    let storagePath: string = context.storagePath;
+    let storagePath: string = vscode.workspace.rootPath; //context.storagePath;
     if (!storagePath) {
         storagePath = Utility.getTempStoragePath();
     }
