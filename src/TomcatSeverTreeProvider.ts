@@ -46,7 +46,9 @@ export class TomcatSeverTreeProvider implements vscode.TreeDataProvider<TreeItem
                 // show war packages with no extension if there is one
                 // and no need to show war packages if its unzipped folder exists
                 const promises: Promise<void>[] = (await fse.readdir(webapps)).map(async (w: string) => {
-                    if (w.toUpperCase() !== 'ROOT') {
+                    const excludeFolders = ['ROOT','DOCS', 'HOST-MANAGER', 'MANAGER'];
+                    if (!excludeFolders.includes(w.toUpperCase())) {
+//                  if (w.toUpperCase() !== 'ROOT') {
                         temp = await fse.stat(path.join(webapps, w));
                         fileExtension = path.extname(path.join(webapps, w));
                         if (temp.isDirectory() || (temp.isFile() && fileExtension === Constants.WAR_FILE_EXTENSION)) {
